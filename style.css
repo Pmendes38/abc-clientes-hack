@@ -1,0 +1,117 @@
+:root {
+  --h4ck-green: #1a433a;
+  --h4ck-cream: #f8f8f8;
+}
+
+body {
+  font-family: "Inter", sans-serif;
+  background-color: var(--h4ck-cream);
+  color: #374151;
+}
+
+.h4ck-card {
+  background-color: #ffffff;
+  border-radius: 0.75rem;
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  padding: 1.5rem;
+}
+
+.h4ck-title {
+  color: var(--h4ck-green);
+  font-weight: 900;
+}
+
+.input-label {
+  font-weight: 600;
+  color: var(--h4ck-green);
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+.text-input {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #d1d5db;
+  border-radius: 0.375rem;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.text-input:focus {
+  border-color: var(--h4ck-green);
+  box-shadow: 0 0 0 2px rgba(26, 67, 58, 0.2);
+  outline: none;
+}
+
+.btn {
+  padding: 0.5rem 1rem;
+  border-radius: 0.375rem;
+  font-weight: 600;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.btn-primary {
+  background-color: var(--h4ck-green);
+}
+
+.btn-primary:hover {
+  background-color: #255a4c;
+}
+
+.btn:disabled {
+  background-color: #a0aec0;
+  cursor: not-allowed;
+}
+
+.loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.9);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.3s;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.loading-overlay.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+#ia-result-area {
+  background-color: #f7fafc;
+  border: 1px dashed #e2e8f0;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  min-height: 150px;
+  white-space: pre-wrap;
+  font-family: monospace;
+}
+
+.spinner {
+  border: 2px solid #f3f3f3;
+  border-top: 2px solid var(--h4ck-green);
+  border-radius: 50%;
+  width: 16px;
+  height: 16px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

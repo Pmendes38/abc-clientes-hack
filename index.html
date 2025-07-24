@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard de Gestão: Metodologia H4CK (v5 com Estúdio IA)</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="antialiased">
+
+  <div id="loading" class="loading-overlay">
+    <p class="text-lg font-semibold text-gray-700">Carregando dados...</p>
+  </div>
+
+  <div class="container mx-auto p-4 md:p-8 max-w-7xl">
+
+    <header class="text-center mb-12">
+      <h1 class="text-4xl md:text-5xl h4ck-title uppercase tracking-wider">DASHBOARD DE GESTÃO H4CK</h1>
+      <p id="client-name-header" class="mt-2 text-xl text-gray-600 font-semibold">-- NOME DO CLIENTE --</p>
+    </header>
+
+    <main class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+
+      <div class="lg:col-span-1 space-y-8">
+
+        <section id="client-info" class="h4ck-card">
+          <h2 class="text-2xl font-bold h4ck-title mb-4">Fase 1: Diagnóstico do Artista</h2>
+          <div>
+            <label for="clientName" class="input-label">Nome do Artista:</label>
+            <input type="text" id="clientName" class="text-input data-field" placeholder="Ex: Artista Z">
+          </div>
+          <div class="mt-4">
+            <label for="clientBio" class="input-label">Bio (Background do Artista):</label>
+            <textarea id="clientBio" rows="4" class="text-input data-field" placeholder="História, gênero musical, valores, diferenciais, jornada..."></textarea>
+          </div>
+          <div class="mt-4">
+            <label for="clientPersonas" class="input-label">Persona do Fã:</label>
+            <textarea id="clientPersonas" rows="4" class="text-input data-field" placeholder="Descreva o fã ideal. O que ele ouve, sente, valoriza?"></textarea>
+          </div>
+        </section>
+
+        <section id="strategy-setup" class="h4ck-card">
+          <h2 class="text-2xl font-bold h4ck-title mb-4">Fase 3: Planejamento ABC</h2>
+          <div>
+            <label for="strategyMode" class="input-label">Modo Estratégico:</label>
+            <select id="strategyMode" class="text-input bg-white data-field">
+              <option value="70,20,10">Padrão (70A/20B/10C)</option>
+              <option value="30,40,30">Lançamento (30A/40B/30C)</option>
+              <option value="85,10,5">Viral (85A/10B/5C)</option>
+              <option value="10,60,30">Gestão de Crise (10A/60B/30C)</option>
+            </select>
+          </div>
+          <div class="mt-6">
+            <h3 class="input-label">Editorias (Cole aqui as ideias geradas)</h3>
+            <div class="space-y-4">
+              <div>
+                <label class="font-semibold text-green-600">A (Crescimento):</label>
+                <textarea id="editorialsA" rows="3" class="text-input mt-1 data-field" placeholder="Cole aqui as melhores ideias de Topo de Funil..."></textarea>
+              </div>
+              <div>
+                <label class="font-semibold text-yellow-600">B (Engajamento):</label>
+                <textarea id="editorialsB" rows="3" class="text-input mt-1 data-field" placeholder="Cole aqui as melhores ideias de Meio de Funil..."></textarea>
+              </div>
+              <div>
+                <label class="font-semibold text-blue-600">C (Construção):</label>
+                <textarea id="editorialsC" rows="3" class="text-input mt-1 data-field" placeholder="Cole aqui as melhores ideias de Fundo de Funil..."></textarea>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <div class="lg:col-span-2 space-y-8">
+        <section id="matriz-visual" class="h4ck-card">
+          <h2 class="text-2xl font-bold h4ck-title mb-4">Matriz de Conteúdo e Impacto</h2>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div class="w-full h-80"><canvas id="volumeChart"></canvas></div>
+            <div class="w-full h-80"><canvas id="paretoChart"></canvas></div>
+          </div>
+        </section>
+
+        <section id="kpi-tracking" class="h4ck-card">
+          <h2 class="text-2xl font-bold h4ck-title mb-4">Fase 6: Acompanhamento de KPIs</h2>
+          <div class="overflow-x-auto">
+            <table class="w-full text-left">
+              <thead>
+                <tr class="border-b-2 border-gray-200">
+                  <th class="p-2">Data</th>
+                  <th class="p-2 text-green-600">Seguidores (A)</th>
+                  <th class="p-2 text-yellow-600">Engajamento % (B)</th>
+                  <th class="p-2 text-blue-600">Cliques Link (C)</th>
+                  <th class="p-2"></th>
+                </tr>
+              </thead>
+              <tbody id="kpi-table-body"></tbody>
+            </table>
+          </div>
+          <div class="mt-4 text-right">
+            <button id="addRowBtn" class="btn btn-primary">Adicionar Semana</button>
+          </div>
+        </section>
+
+        <section id="ai-content-studio" class="h4ck-card lg:col-span-2">
+          <h2 class="text-2xl font-bold h4ck-title mb-4">Estúdio de Conteúdo IA</h2>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label for="ia-target-audience" class="input-label">Público a Alcançar:</label>
+              <select id="ia-target-audience" class="text-input bg-white">
+                <option value="Novos Públicos (Não Seguidores)">Novos Públicos (Não Seguidores)</option>
+                <option value="Seguidores Atuais (Fãs)">Seguidores Atuais (Fãs)</option>
+              </select>
+            </div>
+            <div>
+              <label for="ia-funnel-stage" class="input-label">Etapa do Funil:</label>
+              <select id="ia-funnel-stage" class="text-input bg-white">
+                <option value="Topo de Funil (Atração)">Topo de Funil (Atração)</option>
+                <option value="Meio de Funil (Relacionamento)">Meio de Funil (Relacionamento)</option>
+                <option value="Fundo de Funil (Conversão)">Fundo de Funil (Conversão)</option>
+              </select>
+            </div>
+            <div>
+              <label for="ia-content-type" class="input-label">Tipo de Conteúdo:</label>
+              <select id="ia-content-type" class="text-input bg-white">
+                <option value="Bastidores/Processo Criativo">Bastidores/Processo Criativo</option>
+                <option value="Conexão Pessoal/História">Conexão Pessoal/História</option>
+                <option value="Performance/Música">Performance/Música</option>
+                <option value="Divulgação (Show/Lançamento)">Divulgação (Show/Lançamento)</option>
+              </select>
+            </div>
+            <div>
+              <label for="ia-format" class="input-label">Formato:</label>
+              <select id="ia-format" class="text-input bg-white">
+                <option value="Reels (Vídeo Curto)">Reels (Vídeo Curto)</option>
+                <option value="Carrossel (Imagens)">Carrossel (Imagens)</option>
+                <option value="Story Interativo">Story Interativo</option>
+                <option value="Post Único (Imagem/Texto)">Post Único (Imagem/Texto)</option>
+              </select>
+            </div>
+          </div>
+          <div class="mt-4">
+            <label for="ia-custom-prompt" class="input-label">Instrução Adicional (Opcional):</label>
+            <textarea id="ia-custom-prompt" rows="2" class="text-input" placeholder="Ex: Focar na letra da música X, usar uma linguagem mais poética..."></textarea>
+          </div>
+          <div class="mt-4 text-center">
+            <button id="generate-content-btn" class="btn btn-primary w-full md:w-auto">
+              <span id="generate-spinner" class="spinner hidden"></span>
+              Gerar Conteúdo
+            </button>
+          </div>
+          <div class="mt-6">
+            <h3 class="input-label">Resultados da IA:</h3>
+            <div id="ia-result-area">Aguardando comando...</div>
+          </div>
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <script src="script.js" type="module" defer></script>
+</body>
+
+</html>
