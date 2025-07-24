@@ -1,0 +1,13 @@
+# Arquivos de configuração de IDEs
+.vscode/
+
+# Arquivos de sistema operacional
+.DS_Store
+Thumbs.db
+
+# Arquivos de dependências (se usar Node.js no futuro)
+/node_modules
+
+# Arquivos de ambiente com senhas e chaves
+.env
+*.env
