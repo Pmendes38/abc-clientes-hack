@@ -227,7 +227,7 @@ async function handleGenerateContent() {
     `;
 
   const payload = { contents: [{ role: "user", parts: [{ text: prompt }] }] };
-  const apiKey = ""; // Chave da API é injetada pelo ambiente
+  const apiKey = "AIzaSyD3pM3np3_mZYWuDcVKGBVJQzsYGWDynu0"; // Chave da API é injetada pelo ambiente
   const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
 
   try {
