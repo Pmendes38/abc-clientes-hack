@@ -7,13 +7,13 @@ import {
 } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
 const firebaseConfig = {
-  apiKey: "SUA_CHAVE_API_AQUI",
+  apiKey: "AIzaSyD3pM3np3_mZYWuDcVKGBVJQzsYGWDynu0",
   authDomain: "gui-mecca-metodo-abc.firebaseapp.com",
   projectId: "gui-mecca-metodo-abc",
-  storageBucket: "gui-mecca-metodo-abc.appspot.com",
-  messagingSenderId: "SEU_SENDER_ID_AQUI",
-  appId: "SEU_APP_ID_AQUI",
-  measurementId: "G-498082859",
+  storageBucket: "gui-mecca-metodo-abc.firebasestorage.app",
+  messagingSenderId: "681459438749",
+  appId: "1:681459438749:web:f74d29c5b89095d1bf3074",
+  measurementId: "G-CKR88VMG3F",
 };
 
 const app = initializeApp(firebaseConfig);
