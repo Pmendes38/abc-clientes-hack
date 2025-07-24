@@ -6,6 +6,7 @@ import {
   onSnapshot,
 } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
+// Configuração final do seu Firebase
 const firebaseConfig = {
   apiKey: "AIzaSyD3pM3np3_mZYWuDcVKGBVJQzsYGWDynu0",
   authDomain: "gui-mecca-metodo-abc.firebaseapp.com",
@@ -22,11 +23,11 @@ const db = getFirestore(app);
 // --- LÓGICA DINÂMICA DE CLIENTE ---
 const urlParams = new URLSearchParams(window.location.search);
 const dashboardId = urlParams.get("cliente");
+const loadingOverlay = document.getElementById("loading");
 
 if (!dashboardId) {
-  const loadingOverlay = document.getElementById("loading");
   loadingOverlay.innerHTML = `
-        <div class="text-center p-4">
+        <div class="text-center p-4 bg-white rounded-lg shadow-lg">
             <h1 class="text-2xl font-bold text-red-700">ERRO: CLIENTE NÃO ESPECIFICADO</h1>
             <p class="mt-2 text-gray-600">Para usar o dashboard, adicione <strong class="text-gray-800">?cliente=nomedocliente</strong> ao final da URL.</p>
             <p class="mt-4 text-sm text-gray-500">Exemplo: .../dashboard.html?cliente=guilherme-mecca</p>
@@ -43,7 +44,6 @@ const clientNameHeader = document.getElementById("client-name-header");
 const strategyModeSelect = document.getElementById("strategyMode");
 const addRowBtn = document.getElementById("addRowBtn");
 const kpiTableBody = document.getElementById("kpi-table-body");
-const loadingOverlay = document.getElementById("loading");
 const clientBioInput = document.getElementById("clientBio");
 const clientPersonasInput = document.getElementById("clientPersonas");
 const generateContentBtn = document.getElementById("generate-content-btn");
@@ -52,9 +52,9 @@ const generateSpinner = document.getElementById("generate-spinner");
 
 let kpiData = [];
 
-// --- Data Persistence ---
+// --- Data Persistence (Automatic) ---
 async function saveData() {
-  const dataToSave = { kpiData };
+  const dataToSave = { kpiData: kpiData || [] };
   dataFields.forEach((field) => {
     dataToSave[field.id] = field.value;
   });
@@ -211,28 +211,24 @@ async function handleGenerateContent() {
 
   const prompt = `
         Aja como um diretor de criação e estrategista musical sênior para a agência H4CK, especializada em artistas.
-        
         ARTISTA: ${bio}
         PERSONA DO FÃ: ${persona}
-
         Sua tarefa é gerar 3 ideias de posts para as redes sociais deste artista, com as seguintes especificações:
         - Público-alvo: ${targetAudience}
         - Etapa do Funil: ${funnelStage}
         - Tipo de Conteúdo: ${contentType}
         - Formato: ${format}
         - Instrução Adicional: ${customInstruction || "Nenhuma"}
-
         Para cada ideia, forneça:
         1.  **Conceito Musical:** Uma descrição curta e direta da ideia, conectada ao universo do artista.
         2.  **Legenda Sugerida:** Um texto para a legenda que gere conexão com os fãs, com hashtags de nicho musical relevantes.
         3.  **Call-to-Action (CTA):** Uma chamada para ação clara (Ex: 'Ouça no Spotify', 'Comente sua parte favorita', 'Garanta seu ingresso').
-
         Apresente as 3 ideias de forma organizada, prontas para um músico usar.
     `;
 
   const payload = { contents: [{ role: "user", parts: [{ text: prompt }] }] };
-  const apiKey = "SUA_CHAVE_GEMINI_AQUI"; // Lembre-se do alerta de segurança sobre a chave
-  const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
+  const apiKey = ""; // Chave da API é injetada pelo ambiente
+  const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
 
   try {
     const response = await fetch(apiUrl, {
@@ -256,7 +252,7 @@ async function handleGenerateContent() {
     }
   } catch (error) {
     console.error("Erro ao gerar conteúdo:", error);
-    iaResultArea.textContent = `Falha ao gerar ideias: ${error.message}. Verifique o console e se sua API Key é válida.`;
+    iaResultArea.textContent = `Falha ao gerar ideias: ${error.message}. Verifique o console.`;
   } finally {
     generateContentBtn.disabled = false;
     generateSpinner.classList.add("hidden");
