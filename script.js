@@ -22,18 +22,21 @@ const db = getFirestore(app);
 
 // --- LÓGICA DINÂMICA DE CLIENTE ---
 const urlParams = new URLSearchParams(window.location.search);
-const dashboardId = urlParams.get("cliente");
+let dashboardId = urlParams.get("cliente");
 const loadingOverlay = document.getElementById("loading");
 
 if (!dashboardId) {
+  dashboardId = "cliente-exemplo";
+  console.warn(
+    `Nenhum cliente especificado na URL. Carregando cliente padrão: ${dashboardId}`
+  );
   loadingOverlay.innerHTML = `
         <div class="text-center p-4 bg-white rounded-lg shadow-lg">
-            <h1 class="text-2xl font-bold text-red-700">ERRO: CLIENTE NÃO ESPECIFICADO</h1>
-            <p class="mt-2 text-gray-600">Para usar o dashboard, adicione <strong class="text-gray-800">?cliente=nomedocliente</strong> ao final da URL.</p>
-            <p class="mt-4 text-sm text-gray-500">Exemplo: .../dashboard.html?cliente=guilherme-mecca</p>
+            <h1 class="text-xl font-bold text-yellow-700">MODO DE PRÉ-VISUALIZAÇÃO</h1>
+            <p class="mt-2 text-gray-600">Carregando cliente de exemplo: <strong class="text-gray-800">${dashboardId}</strong>.</p>
+            <p class="mt-4 text-sm text-gray-500">Para usar com um cliente real, salve este arquivo e adicione <strong class="text-gray-800">?cliente=nomedocliente</strong> ao final da URL.</p>
         </div>
     `;
-  throw new Error("ID do cliente não encontrado na URL.");
 }
 
 const docRef = doc(db, "h4ck_dashboards", dashboardId);
@@ -227,7 +230,10 @@ async function handleGenerateContent() {
     `;
 
   const payload = { contents: [{ role: "user", parts: [{ text: prompt }] }] };
-  const apiKey = "AIzaSyD3pM3np3_mZYWuDcVKGBVJQzsYGWDynu0"; // Chave da API é injetada pelo ambiente
+
+  // AQUI ESTÁ A CHAVE NOVA E CORRIGIDA
+  const apiKey = "AIzaSyDa6vh-O9-zzJ3Z8Q-1BzY7PqsbDrRwKuE";
+
   const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
 
   try {
@@ -273,6 +279,8 @@ onSnapshot(
   },
   (error) => {
     console.error("Erro ao ouvir o documento:", error);
-    loadingOverlay.classList.add("hidden");
+    if (error.code !== "permission-denied") {
+      loadingOverlay.classList.add("hidden");
+    }
   }
 );
